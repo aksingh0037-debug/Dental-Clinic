@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lal Pharmacy — Linked to Lal Dental Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mint: #F0FAF7;
+    --ivory: #F7F4EE;
+    --green: #166B4E;
+    --green-light: #1E8862;
+    --green-pale: #E3F5EE;
+    --teal: #1A6B6B;
+    --gold: #C8A86B;
+    --gold-light: #E8D4A8;
+    --charcoal: #1C2226;
+    --grey: #6B7280;
+    --soft: #9CA3AF;
+    --white: #FFFFFF;
+    --shadow: 0 20px 60px rgba(22,107,78,0.12);
+    --shadow-sm: 0 4px 20px rgba(22,107,78,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--mint); color: var(--charcoal); overflow-x: hidden; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 5%;
+    background: rgba(240,250,247,0.94);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(22,107,78,0.12);
+    transition: box-shadow 0.3s;
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-icon-ph {
+    width: 38px; height: 38px; background: var(--green);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .logo-text-wrap span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--green); display: block; line-height: 1;
+  }
+  .logo-text-wrap sub {
+    font-size: 0.62rem; font-weight: 500; color: var(--gold);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--charcoal);
+    font-size: 0.87rem; font-weight: 500;
+    position: relative; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 100%;
+    height: 1.5px; background: var(--green); transition: right 0.3s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a:hover::after { right: 0; }
+
+  .nav-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green); color: var(--white) !important;
+    padding: 0.55rem 1.2rem; border-radius: 100px;
+    font-size: 0.83rem !important; font-weight: 600 !important;
+    transition: all 0.3s !important;
+  }
+  .nav-back::after { display: none !important; }
+  .nav-back:hover { background: var(--green-light) !important; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(22,107,78,0.3) !important; }
+
+  .nav-toggle { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--charcoal); }
+
+  /* ─── HERO ─── */
+  .ph-hero {
+    min-height: 90vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 4rem;
+    padding: 7rem 5% 4rem;
+    position: relative; overflow: hidden;
+  }
+
+  .ph-hero::before {
+    content: '';
+    position: absolute; top: -120px; right: -120px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(22,107,78,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .ph-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-pale); color: var(--green);
+    padding: 0.4rem 1rem; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+    border: 1px solid rgba(22,107,78,0.15); margin-bottom: 1.4rem;
+    animation: fadeUp 0.7s ease both;
+  }
+  .ph-badge-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+
+  .ph-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.4rem);
+    font-weight: 300; line-height: 1.1; margin-bottom: 1.4rem;
+    animation: fadeUp 0.7s 0.12s ease both;
+  }
+  .ph-hero h1 em { color: var(--green); font-style: italic; }
+  .ph-hero h1 .highlight { color: var(--gold); }
+
+  .ph-hero p {
+    font-size: 1rem; color: var(--grey); line-height: 1.75;
+    max-width: 470px; margin-bottom: 2.2rem;
+    animation: fadeUp 0.7s 0.24s ease both;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.7s 0.36s ease both; }
+
+  .btn-green {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green); color: var(--white);
+    padding: 0.88rem 1.9rem; border-radius: 100px;
+    font-size: 0.9rem; font-weight: 600; text-decoration: none;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.3s; box-shadow: 0 8px 24px rgba(22,107,78,0.3);
+  }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(22,107,78,0.38); }
+
+  .btn-outline-green {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--charcoal);
+    padding: 0.88rem 1.9rem; border-radius: 100px;
+    font-size: 0.9rem; font-weight: 500; text-decoration: none;
+    border: 1.5px solid rgba(28,34,38,0.18); cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-outline-green:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
+
+  .ph-hero-stats {
+    display: flex; gap: 2.2rem; margin-top: 2.8rem;
+    animation: fadeUp 0.7s 0.48s ease both;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 600; color: var(--green); line-height: 1;
+  }
+  .stat-label { font-size: 0.74rem; color: var(--soft); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
+
+  .ph-hero-visual {
+    position: relative; height: 560px;
+    animation: fadeRight 0.9s 0.2s ease both;
+  }
+  .ph-hero-visual img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 24px;
+    box-shadow: var(--shadow);
+  }
+  .ph-hero-card {
+    position: absolute; bottom: 2rem; left: -2.5rem;
+    background: var(--white); border-radius: 16px;
+    padding: 1.1rem 1.4rem; box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 12px;
+    animation: float 3s ease-in-out infinite;
+  }
+  .ph-hero-card-icon { width: 42px; height: 42px; background: var(--green-pale); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+  .ph-hero-card strong { display: block; font-size: 0.88rem; }
+  .ph-hero-card span { font-size: 0.74rem; color: var(--soft); }
+
+  .ph-badge-float {
+    position: absolute; top: 1.5rem; right: -1.5rem;
+    background: var(--gold); color: var(--white);
+    border-radius: 16px; padding: 1rem 1.2rem;
+    text-align: center; box-shadow: var(--shadow);
+    animation: float 3s 1.5s ease-in-out infinite;
+  }
+  .ph-badge-float strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; }
+  .ph-badge-float span { font-size: 0.7rem; letter-spacing: 0.05em; opacity: 0.9; }
+
+  /* ─── SHARED ─── */
+  section { padding: 5.5rem 5%; }
+  .section-tag { font-size: 0.73rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); display: inline-block; margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 3.2vw, 2.8rem); font-weight: 400; line-height: 1.2; margin-bottom: 0.9rem; }
+  .section-title em { color: var(--green); font-style: italic; }
+  .section-sub { color: var(--grey); font-size: 0.96rem; line-height: 1.72; max-width: 520px; }
+  .section-header { margin-bottom: 3rem; }
+  .section-header.center { text-align: center; }
+  .section-header.center .section-sub { margin: 0 auto; }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── PRODUCTS ─── */
+  #products { background: var(--ivory); }
+
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+
+  .product-card {
+    background: var(--white); border-radius: 20px;
+    padding: 1.8rem; border: 1px solid rgba(22,107,78,0.08);
+    transition: all 0.4s ease; cursor: default; position: relative; overflow: hidden;
+  }
+  .product-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--green), var(--gold));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+  .product-card:hover::before { transform: scaleX(1); }
+
+  .product-icon { width: 52px; height: 52px; background: var(--green-pale); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.1rem; transition: transform 0.3s; }
+  .product-card:hover .product-icon { transform: scale(1.1); }
+  .product-card h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .product-card p { font-size: 0.85rem; color: var(--grey); line-height: 1.65; }
+  .product-tag { display: inline-block; margin-top: 0.9rem; font-size: 0.76rem; font-weight: 600; color: var(--green); background: var(--green-pale); padding: 0.22rem 0.7rem; border-radius: 100px; }
+
+  /* ─── ABOUT ─── */
+  #ph-about { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+  .ph-about-imgs { position: relative; height: 480px; }
+  .ph-about-imgs img:first-child { position: absolute; width: 78%; height: 85%; top: 0; left: 0; object-fit: cover; border-radius: 20px; box-shadow: var(--shadow); }
+  .ph-about-imgs img:last-child { position: absolute; width: 50%; height: 52%; bottom: 0; right: 0; object-fit: cover; border-radius: 18px; box-shadow: var(--shadow); border: 6px solid var(--mint); }
+  .ph-about-bubble { position: absolute; bottom: 6.5rem; left: 55%; width: 82px; height: 82px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 8px 24px rgba(200,168,107,0.35); z-index: 2; }
+
+  .ph-features { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .ph-feature { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.2rem; background: var(--green-pale); border-radius: 14px; border-left: 3px solid var(--green); }
+  .ph-feature-icon { font-size: 1.35rem; flex-shrink: 0; margin-top: 2px; }
+  .ph-feature strong { display: block; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .ph-feature p { font-size: 0.82rem; color: var(--grey); line-height: 1.55; }
+
+  /* ─── CONTACT ─── */
+  #ph-contact { background: var(--ivory); }
+
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+  .contact-card {
+    background: var(--white); border-radius: 22px;
+    padding: 2.4rem; box-shadow: var(--shadow);
+    border: 1px solid rgba(22,107,78,0.1);
+  }
+  .contact-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 400; margin-bottom: 0.4rem; }
+  .contact-card > p { font-size: 0.85rem; color: var(--grey); margin-bottom: 2rem; line-height: 1.65; }
+
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--mint); border-radius: 14px;
+    padding: 1rem 1.2rem; margin-bottom: 1rem;
+    text-decoration: none; color: var(--charcoal);
+    border: 1px solid rgba(22,107,78,0.1);
+    transition: all 0.3s ease;
+  }
+  .contact-item:hover { border-color: var(--green); transform: translateX(5px); box-shadow: var(--shadow-sm); }
+  .contact-item-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .ci-green { background: var(--green-pale); }
+  .ci-wa { background: #E6FAF1; }
+  .ci-mail { background: #FEF9EE; }
+  .ci-loc { background: #EEF3FE; }
+  .contact-item strong { display: block; font-size: 0.9rem; margin-bottom: 2px; }
+  .contact-item span { font-size: 0.79rem; color: var(--grey); }
+
+  .hours-card {
+    background: var(--green); color: var(--white);
+    border-radius: 18px; padding: 1.8rem; margin-top: 1.5rem;
+  }
+  .hours-card h4 { font-size: 0.85rem; font-weight: 600; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.1rem; }
+  .hours-row { display: flex; justify-content: space-between; font-size: 0.84rem; padding: 0.42rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-row span:last-child { color: var(--gold-light); font-weight: 500; }
+
+  /* ─── MAP ─── */
+  .map-panel {
+    border-radius: 22px; overflow: hidden;
+    box-shadow: var(--shadow); height: 100%; min-height: 460px;
+    background: var(--green-pale);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2.5rem; text-align: center; position: relative;
+  }
+  .map-panel::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(22,107,78,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .map-icon-big { font-size: 4rem; margin-bottom: 1.2rem; display: block; }
+  .map-panel h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--green); margin-bottom: 0.5rem; }
+  .map-panel p { font-size: 0.88rem; color: var(--grey); line-height: 1.65; margin-bottom: 0.5rem; }
+  .map-panel .map-link {
+    display: inline-block; margin-top: 1.2rem;
+    background: var(--green); color: var(--white);
+    padding: 0.72rem 1.5rem; border-radius: 100px;
+    text-decoration: none; font-size: 0.84rem; font-weight: 600;
+    transition: all 0.3s;
+  }
+  .map-panel .map-link:hover { background: var(--green-light); transform: translateY(-2px); }
+
+  .map-divider { width: 1px; background: rgba(22,107,78,0.1); margin: 1.5rem 0; }
+  .nearby-tag { display: inline-block; background: rgba(22,107,78,0.12); color: var(--green); padding: 0.3rem 0.8rem; border-radius: 100px; font-size: 0.76rem; font-weight: 600; margin: 0.3rem; }
+
+  /* ─── OFFERS ─── */
+  #ph-offers { }
+  .offers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
+  .offer-card {
+    border-radius: 20px; padding: 2rem;
+    background: linear-gradient(135deg, var(--green) 0%, #0D4040 100%);
+    color: var(--white); position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .offer-card:hover { transform: translateY(-5px); }
+  .offer-card::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .offer-emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .offer-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .offer-card p { font-size: 0.83rem; opacity: 0.8; line-height: 1.65; margin-bottom: 1rem; }
+  .offer-badge { display: inline-block; background: var(--gold); color: var(--white); padding: 0.28rem 0.75rem; border-radius: 100px; font-size: 0.75rem; font-weight: 700; }
+
+  /* ─── TEAM ─── */
+  #ph-team { background: var(--ivory); }
+  .ph-team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+  .ph-staff-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.4s; }
+  .ph-staff-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+  .ph-staff-card img { width: 100%; height: 220px; object-fit: cover; object-position: top; }
+  .ph-staff-info { padding: 1.4rem; }
+  .ph-staff-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; }
+  .ph-staff-info .role { font-size: 0.8rem; color: var(--green); font-weight: 600; letter-spacing: 0.03em; margin: 0.25rem 0 0.7rem; }
+  .ph-staff-info p { font-size: 0.82rem; color: var(--grey); line-height: 1.6; }
+
+  /* ─── DENTAL LINK BANNER ─── */
+  .dental-link-banner {
+    background: linear-gradient(135deg, #1A6B6B 0%, #0D4040 100%);
+    padding: 4rem 5%; text-align: center; color: var(--white); position: relative; overflow: hidden;
+  }
+  .dental-link-banner::before { content: ''; position: absolute; top: -60px; right: -60px; width: 250px; height: 250px; border-radius: 50%; background: rgba(200,168,107,0.07); pointer-events: none; }
+  .dental-link-banner::after { content: ''; position: absolute; bottom: -50px; left: -50px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.04); pointer-events: none; }
+  .dental-link-banner span { display: inline-block; background: rgba(200,168,107,0.2); color: #E8D4A8; padding: 0.35rem 1rem; border-radius: 100px; font-size: 0.73rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; border: 1px solid rgba(200,168,107,0.3); }
+  .dental-link-banner h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 400; margin-bottom: 0.8rem; }
+  .dental-link-banner h2 em { font-style: italic; color: #E8D4A8; }
+  .dental-link-banner p { color: rgba(255,255,255,0.7); max-width: 520px; margin: 0 auto 2rem; font-size: 0.93rem; line-height: 1.72; }
+
+  /* ─── FOOTER ─── */
+  footer { background: var(--charcoal); color: rgba(255,255,255,0.75); padding: 3.5rem 5% 2rem; }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+  .footer-brand-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--white); font-weight: 600; display: block; margin-bottom: 0.7rem; }
+  .footer-brand p { font-size: 0.83rem; line-height: 1.7; opacity: 0.6; margin-bottom: 1.3rem; }
+  .footer-social { display: flex; gap: 8px; }
+  .social-btn { width: 36px; height: 36px; background: rgba(255,255,255,0.08); border-radius: 9px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1rem; transition: all 0.3s; }
+  .social-btn:hover { background: var(--green); transform: translateY(-2px); }
+  .footer-col h4 { font-size: 0.77rem; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1.1rem; opacity: 0.65; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+  .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--gold-light); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.8rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; opacity: 0.45; }
+
+  /* ─── FLOATING BTNS ─── */
+  .float-bar {
+    position: fixed; bottom: 2rem; right: 2rem;
+    display: flex; flex-direction: column; gap: 0.7rem;
+    z-index: 200;
+  }
+  .float-btn {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; text-decoration: none; color: var(--white);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+  .float-btn:hover { transform: scale(1.15); }
+  .float-btn.call { background: var(--teal); }
+  .float-btn.whatsapp { background: #25D366; }
+  .float-btn.email { background: var(--gold); }
+  .float-btn-tooltip {
+    position: absolute; right: 62px; top: 50%;
+    transform: translateY(-50%);
+    background: var(--charcoal); color: var(--white);
+    padding: 0.35rem 0.75rem; border-radius: 8px;
+    font-size: 0.75rem; white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .float-btn:hover .float-btn-tooltip { opacity: 1; }
+  .float-btn { position: relative; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeRight { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.55; transform:scale(0.82); } }
+  @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .products-grid, .offers-grid, .ph-team-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-layout { grid-template-columns: 1fr; }
+    #ph-about { grid-template-columns: 1fr; }
+    .ph-about-imgs { height: 340px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .nav-links.open { display: flex; flex-direction: column; position: fixed; inset: 70px 0 0 0; background: var(--mint); padding: 2rem; gap: 1.5rem; z-index: 99; }
+    .ph-hero { grid-template-columns: 1fr; padding: 7rem 5% 3rem; gap: 2rem; }
+    .ph-hero-visual { height: 300px; }
+    .ph-badge-float { display: none; }
+    .ph-hero-card { left: 0; }
+    .products-grid, .offers-grid, .ph-team-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .float-bar { bottom: 1rem; right: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── FLOATING BTNS ─── -->
+<div class="float-bar">
+  <a href="tel:+919540691465" class="float-btn call">
+    📞
+    <span class="float-btn-tooltip">Call Us</span>
+  </a>
+  <a href="https://wa.me/919540691465?text=Hi%2C%20I'd%20like%20to%20book%20an%20appointment" target="_blank" class="float-btn whatsapp">
+    💬
+    <span class="float-btn-tooltip">WhatsApp</span>
+  </a>
+  <a href="mailto:lalpharmacy82@gmail.com" class="float-btn email">
+    ✉️
+    <span class="float-btn-tooltip">Email Us</span>
+  </a>
+</div>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a class="nav-logo" href="pharmacy.html">
+    <img src="./clinicImages/pharmacyLogo.png" alt="Lal Pharmacy Logo" style="height: 45px; width: 45px;">
+    <div class="logo-text-wrap">
+      <span style="font-size: 38px;">Lal Pharmacy</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#ph-about">About</a></li>
+    <li><a href="#ph-offers">Offers</a></li>
+    <li><a href="#ph-contact">Contact</a></li>
+    <li><a href="dentalClinic.html" class="nav-back">🦷 Back to Clinic</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="ph-hero">
+  <div>
+    <div class="ph-badge"><span class="ph-badge-dot"></span>Linked with Lal Dental Clinic</div>
+    <h1>Your <em>Dental & other</em><br> meds Filled <span class="highlight">Instantly</span></h1>
+    <p>Faridabad's most trusted dental pharmacy, right besides Lal Dental Clinic. Get your prescriptions fulfilled, oral care products, and expert medication guidance — all in one place.</p>
+    <div class="hero-actions">
+      <a href="#ph-contact" class="btn-green">📞 Contact Pharmacy</a>
+      <a href="#products" class="btn-outline-green">View Products →</a>
+    </div>
+    <div class="ph-hero-stats">
+      <div>
+        <div class="stat-num">8K+</div>
+        <div class="stat-label">Prescriptions Filled</div>
+      </div>
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Products in Stock</div>
+      </div>
+      <div>
+        <div class="stat-num">4.8★</div>
+        <div class="stat-label">Patient Rating</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ph-hero-visual">
+    <img src="https://images.unsplash.com/photo-1576602976047-174e57a47881?w=900&q=80&auto=format&fit=crop" alt="Pharmacy interior">
+    <div class="ph-hero-card">
+      <div class="ph-hero-card-icon">🏥</div>
+      <div>
+        <strong>Prescription Accepted</strong>
+        <span>All prescriptions</span>
+      </div>
+    </div>
+    <div class="ph-badge-float">
+      <strong>24hr</strong>
+      <span>Emergency Stock</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS ─── -->
+<section id="products">
+  <div class="section-header center reveal">
+    <span class="section-tag">What We Stock</span>
+    <h2 class="section-title">Our <em>Product Range</em></h2>
+    <p class="section-sub">From prescription medicines to premium oral care — everything you need after your dental treatment.</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-icon">💊</div>
+      <h3>Prescription Medicines</h3>
+      <p>Antibiotics, analgesics, anti-inflammatories, and post-operative medications as prescribed by our dentists.</p>
+      <span class="product-tag">Prescription Required</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🪥</div>
+      <h3>Premium Toothpastes</h3>
+      <p>Sensitivity care, whitening, fluoride, herbal, and medicated toothpastes from Colgate, Sensodyne, Himalaya & more.</p>
+      <span class="product-tag">OTC Available</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🌊</div>
+      <h3>Mouthwashes & Rinses</h3>
+      <p>Antiseptic, fluoride, alcohol-free, and post-surgical rinses including Chlorhexidine and Listerine range.</p>
+      <span class="product-tag">OTC Available</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🦷</div>
+      <h3>Dental Floss & Interdental Tools</h3>
+      <p>Waxed and unwaxed floss, interdental brushes, water flossers, tongue cleaners, and gum stimulators.</p>
+      <span class="product-tag">OTC Available</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">😴</div>
+      <h3>Night Guards & Retainers</h3>
+      <p>Custom-fit and ready-to-use mouth guards, retainer cases, cleaning tablets, and storage solutions.</p>
+      <span class="product-tag">Available In-Store</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🧴</div>
+      <h3>Orthodontic Care Products</h3>
+      <p>Wax for braces, orthodontic toothbrushes, floss threaders, retainer sprays, and aligner cleaning kits.</p>
+      <span class="product-tag">Specialist Range</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🔬</div>
+      <h3>Teeth Whitening Kits</h3>
+      <p>Professional-grade at-home whitening strips, gel kits, LED activators, and desensitising agents.</p>
+      <span class="product-tag">Available In-Store</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🌿</div>
+      <h3>Herbal & Ayurvedic Range</h3>
+      <p>Neem-based products, oil pulling solutions, herbal mouth rinses, and natural oral care formulations.</p>
+      <span class="product-tag">OTC Available</span>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🧒</div>
+      <h3>Children's Dental Care</h3>
+      <p>Fluoride gels, kid-safe toothpastes, first toothbrushes, teething gels, and reward sticker kits.</p>
+      <span class="product-tag">Age 2–12 Range</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="ph-about">
+  <div class="ph-about-imgs reveal">
+    <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80&auto=format&fit=crop" alt="Pharmacist at work">
+    <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80&auto=format&fit=crop" alt="Pharmacy shelves">
+  </div>
+
+  <div class="reveal">
+    <span class="section-tag">About the Pharmacy</span>
+    <h2 class="section-title">Trusted <em>Medicines</em>, Expert Guidance</h2>
+    <p class="section-sub">Established in 2018, Lal Pharmacy operates within Lal Dental Clinic, ensuring seamless access to all dental medications and oral care products. Licensed by the Drug Controller of India.</p>
+
+    <div class="ph-features">
+      <div class="ph-feature">
+        <div class="ph-feature-icon">🏛️</div>
+        <div>
+          <strong>Fully Licensed & Registered</strong>
+          <p>Licensed under the Drugs & Cosmetics Act with Drug License No. HR-GGN-2010-PH-1482. All medicines sourced from verified distributors.</p>
+        </div>
+      </div>
+      <div class="ph-feature">
+        <div class="ph-feature-icon">🤝</div>
+        <div>
+          <strong>Seamless Clinic Integration</strong>
+          <p>Directly linked to Lal Dental Clinic — prescriptions are electronically sent to the pharmacy before you leave the dental chair.</p>
+        </div>
+      </div>
+      <div class="ph-feature">
+        <div class="ph-feature-icon">🚚</div>
+        <div>
+          <strong>Home Delivery Available</strong>
+          <p>Free home delivery within 5 km of the clinic for orders above ₹500. Same-day delivery for prescriptions placed before 4 PM.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── OFFERS ─── -->
+<section id="ph-offers">
+  <div class="section-header center reveal">
+    <span class="section-tag">Special Offers</span>
+    <h2 class="section-title">Exclusive <em>Deals</em> for Clinic Patients</h2>
+    <p class="section-sub">Show your Lal Dental patient card to avail these exclusive discounts at our pharmacy.</p>
+  </div>
+
+  <div class="offers-grid">
+    <div class="offer-card reveal">
+      <span class="offer-emoji">🎁</span>
+      <h3>Patient Loyalty Discount</h3>
+      <p>Lal Dental patients receive flat 15% off on all non-prescription products every visit.</p>
+      <span class="offer-badge">15% OFF</span>
+    </div>
+    <div class="offer-card reveal">
+      <span class="offer-emoji">🚚</span>
+      <h3>Free Home Delivery</h3>
+      <p>Order medicines online via WhatsApp after your clinic visit and get free home delivery within 5 km.</p>
+      <span class="offer-badge">0 Delivery Fee</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TEAM ─── -->
+<!-- <section id="ph-team">
+  <div class="section-header center reveal">
+    <span class="section-tag">Our Pharmacists</span>
+    <h2 class="section-title">Expert <em>Pharmacy Team</em></h2>
+    <p class="section-sub">Qualified pharmacists ready to assist with medication guidance, dosage queries, and product recommendations.</p>
+  </div>
+
+  <div class="ph-team-grid">
+    <div class="ph-staff-card reveal">
+      <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=80&auto=format&fit=crop&crop=top" alt="Chief Pharmacist">
+      <div class="ph-staff-info">
+        <h3>Kavitha Menon</h3>
+        <div class="role">Chief Pharmacist (B.Pharm, M.Pharm)</div>
+        <p>14 years of experience in dental and clinical pharmacy. Specialises in medication counselling and drug interaction management.</p>
+      </div>
+    </div>
+    <div class="ph-staff-card reveal">
+      <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=80&auto=format&fit=crop&crop=top" alt="Registered Pharmacist">
+      <div class="ph-staff-info">
+        <h3>Aman Verma</h3>
+        <div class="role">Registered Pharmacist (D.Pharm)</div>
+        <p>7 years in retail and hospital pharmacy. Expert in post-surgical medication management and patient counselling for dental care.</p>
+      </div>
+    </div>
+    <div class="ph-staff-card reveal">
+      <img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=600&q=80&auto=format&fit=crop&crop=top" alt="Pharmacy Assistant">
+      <div class="ph-staff-info">
+        <h3>Divya Sharma</h3>
+        <div class="role">Pharmacy Assistant & Oral Care Advisor</div>
+        <p>Trained oral care specialist helping patients choose the right products for their post-treatment care and daily routine.</p>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ─── CONTACT ─── -->
+<section id="ph-contact">
+  <div class="section-header center reveal">
+    <span class="section-tag">Get in Touch</span>
+    <h2 class="section-title">Contact <em>Our Pharmacy</em></h2>
+    <p class="section-sub">Reach us for prescriptions, product queries, delivery orders, or general assistance.</p>
+  </div>
+
+  <div class="contact-layout">
+    <div class="contact-card reveal">
+      <h3>Contact Details</h3>
+      <p>Reach us through any of the channels below. We typically respond within 15 minutes during pharmacy hours.</p>
+
+      <a href="tel:+919540691465" class="contact-item">
+        <div class="contact-item-icon ci-green">📞</div>
+        <div>
+          <strong>+91 95406 91465</strong>
+          <span>Call for prescription queries & stock availability</span>
+        </div>
+      </a>
+      <a href="https://wa.me/919540691465?text=Hi%2C%20I%20need%20medicines%20from%20Lal%20Pharmacy" target="_blank" class="contact-item">
+        <div class="contact-item-icon ci-wa">💬</div>
+        <div>
+          <strong>WhatsApp Orders: +91 95406 91465</strong>
+          <span>Send prescription photo for quick delivery</span>
+        </div>
+      </a>
+      <a href="mailto:lalpharmacy82@gmail.com" class="contact-item">
+        <div class="contact-item-icon ci-mail">✉️</div>
+        <div>
+          <strong>lalpharmacy82@gmail.com</strong>
+          <span>Email for bulk orders & corporate queries</span>
+        </div>
+      </a>
+      <a href="#" class="contact-item">
+        <div class="contact-item-icon ci-loc">📍</div>
+        <div>
+          <strong>Shop No. 3 (Next to Reception)</strong>
+          <span>Opposite Divine Retreat Asharam, Sector 82, Greater Faridabad, Haryana – 121002</span>
+        </div>
+      </a>
+
+      <div class="hours-card">
+        <h4>🕐 Pharmacy Hours</h4>
+        <div class="hours-row"><span>Monday – Friday</span><span>9:30 AM – 9:00 PM</span></div>
+        <div class="hours-row"><span>Saturday</span><span>9:30 AM – 7:00 PM</span></div>
+        <div class="hours-row"><span>Sunday</span><span>9:30 AM – 4:00 PM</span></div>
+        <div class="hours-row"><span>Emergency Medicines</span><span>24/7 via WhatsApp</span></div>
+      </div>
+    </div>
+
+    <div class="map-panel reveal">
+      <img src="./clinicImages/pharmacyLogo.png" alt="Lal Pharmacy Logo" style="height: 50px; width: 50px;">
+      <h3>Lal Pharmacy</h3>
+      <p><strong>Shop No. 3,</strong><br>Opposite Divine Retreat Asharam, Sector 82,<br>Greater Faridabad, Haryana – 121002</p>
+      <p style="margin-top:0.8rem; font-size:0.82rem; color:var(--green); font-weight:600;">Located right next to Lal Dental Clinic reception</p>
+
+      <div style="margin-top: 1.2rem;">
+        <span class="nearby-tag">🚇 Bata Chowk Metro – 3 km</span>
+      </div>
+
+      <a href="https://maps.app.goo.gl/ZN8YdHkaQ74WxBL48?g_st=ic" target="_blank" class="map-link">🗺️ Open in Google Maps</a>
+
+      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(22,107,78,0.15); width:100%;">
+        <p style="font-size:0.82rem; color:var(--grey); margin-bottom:0.8rem; font-weight:600;">Order via WhatsApp</p>
+        <p style="font-size:0.8rem; color:var(--grey); line-height:1.6;">Send a photo of your prescription to <strong style="color:var(--green);">+91 95406 91465</strong> and we'll prepare your medicines before you reach the counter — or deliver to your home!</p>
+        <a href="https://wa.me/919540691465?text=Hi%2C%20I%20want%20to%20place%20a%20medicine%20order" target="_blank" style="display:inline-block;margin-top:1rem;background:#25D366;color:#fff;padding:0.65rem 1.4rem;border-radius:100px;text-decoration:none;font-size:0.82rem;font-weight:600;">💬 Order on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BACK TO CLINIC BANNER ─── -->
+<div class="dental-link-banner">
+  <div style="position:relative;z-index:1;">
+    <span>🦷 Linked Clinic</span>
+    <h2>Need a <em>Dental Appointment?</em></h2>
+    <p>Visit our partner Lal Dental Clinic next door for expert dental care. Same trust, same quality — just a few steps away.</p>
+    <a href="dentalClinic.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#fff;padding:0.9rem 2.2rem;border-radius:100px;text-decoration:none;font-size:0.9rem;font-weight:600;transition:all 0.3s;box-shadow:0 8px 24px rgba(200,168,107,0.35);" onmouseover="this.style.background='#d4b87a';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#C8A86B';this.style.transform='translateY(0)'">🦷 Visit Lal Dental →</a>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-brand-logo">💊 Lal Pharmacy</span>
+      <p>Your trusted dental pharmacy since 2018 — delivering quality medicines and oral care products to the Gurugram community.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">📘</a>
+        <a href="#" class="social-btn">📸</a>
+        <a href="#" class="social-btn">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#products">Prescription Meds</a></li>
+        <li><a href="#products">Toothpastes</a></li>
+        <li><a href="#products">Mouthwashes</a></li>
+        <li><a href="#products">Whitening Kits</a></li>
+        <li><a href="#products">Children's Range</a></li>
+        <li><a href="#products">Orthodontic Care</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#ph-about">About Us</a></li>
+        <li><a href="#ph-offers">Current Offers</a></li>
+        <li><a href="#ph-contact">Contact & Hours</a></li>
+        <li><a href="dental-clinic.html" style="color:#C8A86B;font-weight:600;">🦷 Dental Clinic</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+919540691465">📞 +91 95406 91465</a></li>
+        <li><a href="https://wa.me/919540691465" target="_blank">💬 WhatsApp Orders</a></li>
+        <li><a href="mailto:lalpharmacy82@gmail.com">✉️ lalpharmacy82@gmail.com</a></li>
+        <li><a href="#ph-contact">📍 Shop No. 2/3, Opposite Divine Retreat Asharam, Sector 82, Greater Faridabad, Haryana 121002</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 Lal Pharmacy. All rights reserved. | Drug License: HR-GGN-2010-PH-1482</span>
+    <span>Privacy Policy · Terms · Sitemap</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  reveals.forEach(el => obs.observe(el));
+
+  // Nav shadow
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(22,107,78,0.1)' : 'none';
+  });
+
+  // Mobile nav close
+  document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  }));
+</script>
+</body>
+</html>
